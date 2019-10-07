@@ -2,18 +2,19 @@ require_relative 'card'
 
 class Deck
   attr_accessor :cards
-  rating = %w[2 3 4 5 6 7 8 9 10 J Q K A]
-  suit = %w[♠ ♥ ♦ ♣]
+  attr_reader :suit,  :rating,  :value,  :card
 
   def initialize
     @cards = []
-    @suit.each do |suit|
-      @rating.each do |rating|
-          @cards << Card.new(suit, rating)
+    @card = []
+    Card::SUIT.each do |suit|
+      Card::RATING.each do |rating, value|
+          @cards << Card.new(suit, rating, value)
+          @cards.shuffle!
         end
       end
     end
 
-
 end
+
 

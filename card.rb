@@ -2,11 +2,30 @@
 
 class Card
 
-  attr_reader :suit, :rating
+  attr_reader :suit, :rating,  :value,  :card
+
+  RATING = {2=>"2",
+   3=>"3",
+    4=>"4",
+     5=>"5",
+      6=>"6",
+       7=>"7",
+        8=>"8",
+         9=>"9",
+          10=>"10",
+           "J"=>"10",
+            "Q"=>"10",
+             "K"=>"10",
+              "A"=>"11"}
+  SUIT = %w[♠ ♥ ♦ ♣]
 
 
-  def initialize (suit, rating)
+  def initialize (suit, rating, value)
     @suit = suit
     @rating = rating
+    @value = value
   end
+
+
+
 end
