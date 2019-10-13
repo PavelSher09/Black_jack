@@ -2,7 +2,7 @@
 
 class Card
 
-  attr_reader :suit, :rating,  :value,  :card
+  attr_reader :suit, :rating,  :value
 
   RATING = {2=>"2",
    3=>"3",
@@ -26,6 +26,9 @@ class Card
     @value = value
   end
 
+  def look
+    @card.suit + @card.rating
+  end
 
 
 end
