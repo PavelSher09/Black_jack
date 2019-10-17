@@ -3,42 +3,36 @@ require_relative 'card'
 require_relative 'game'
 require_relative 'bank'
 
-
 class Gamer
-  attr_accessor  :name
-  attr_reader  :given_cards,  :value,  :deck,  :money,  :card
+  attr_accessor :name
+  attr_reader :given_cards, :value, :deck, :money, :cards, :game
 
-
+  BET = 10
 
   def initialize(name)
-
     @name = name
     @given_cards = []
     @money = 100
-    @given_cards = []
   end
 
-def deal
-  @deck = Deck.new
+  def bet
+    BET
+  end
 
+  def take_card(deck)
+    @given_cards = deck.cards.pop(2)
+    @money -= BET
+  end
 
-
-  @given_cards = deck.cards.pop(2)
-end
-
-  def one_more
-    @given_cards << deck.cards.pop
-
+  def one_more(deck)
+    deck.cards.pop << @given_cards
   end
 
   def points
-
-   @points = 0
-   @given_cards.each do |card|
-     @points += card.value.to_i
-   end
-   p @points
-
-
+    @points = 0
+    @given_cards.each do |card|
+      @points += card.value.to_i
+    end
+    @points
   end
 end

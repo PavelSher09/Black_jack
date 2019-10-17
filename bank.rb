@@ -7,13 +7,9 @@ require_relative 'bank'
 require_relative 'game'
 
 class Bank
+  attr_reader :bank
 
-
-attr_reader :money
-
-  def initialize
-    @money = 100
+  def initialize(_name)
+    @bank = 0
   end
-
-
 end
