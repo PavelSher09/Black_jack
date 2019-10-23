@@ -10,6 +10,7 @@ class Main
   attr_reader :game, :gamer, :cards, :points, :deck
 
   def create_game
+
     puts 'Input your name: '
     @name = gets.strip
     @game = Game.new(name)
@@ -27,7 +28,7 @@ class Main
 
     loop do
       show_cards
-      show_dealer_cards_final
+      show_dealer_cards_secret
 
       menu
 
@@ -39,12 +40,16 @@ class Main
         @game.one_more_player
 
       when 3
-        p @game.gamer.money
+         open_cards
       when 4
       else
         puts 'Wrong input. Please, choose 1, 2 or 3.'
       end
     end
+  end
+
+  def show_dealer_cards_secret
+    puts "Dealer cards ** value **"
   end
 
   def show_card(card)
@@ -68,5 +73,27 @@ class Main
     show_dealer_cards(game.dealer, game.dealer.points)
     @game.dealer.given_cards.each { |card| show_card(card) }
   end
+
+  def open_cards
+    @game.one_more_dealer
+    @game.open_cards
+    show_dealer_cards_final
+    show_cards
+    play_again
+
+  end
+
+  def play_again
+    puts 'Play again? (input: Y/N)'
+    input = gets.strip
+    if input == 'y'
+      @game.deal
+    elsif
+      abort
+    end
+  end
+
+
 end
+
 Main.new.run

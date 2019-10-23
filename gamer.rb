@@ -4,8 +4,8 @@ require_relative 'game'
 require_relative 'bank'
 
 class Gamer
-  attr_accessor :name
-  attr_reader :given_cards, :value, :deck, :money, :cards, :game
+  attr_accessor :name,  :money
+  attr_reader :given_cards, :value, :deck, :cards, :game
 
   BET = 10
 
