@@ -33,6 +33,12 @@ class Gamer
     @given_cards.each do |card|
       @points += card.value.to_i
     end
+    @points -= 10 if aces? && @points > 21
     @points
   end
+
+  def aces?
+    @given_cards.any? { |card| rating = 'A' }
+  end
+
 end
