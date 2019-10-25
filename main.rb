@@ -38,10 +38,11 @@ class Main
         @game.one_more_dealer
       when 2
         @game.one_more_player
+        #@game.three_cards
 
       when 3
          open_cards
-      when 4
+
       else
         puts 'Wrong input. Please, choose 1, 2 or 3.'
       end
@@ -79,6 +80,7 @@ class Main
     @game.open_cards
     show_dealer_cards_final
     show_cards
+    @game.check_money
     play_again
 
   end
