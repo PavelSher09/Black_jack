@@ -37,8 +37,9 @@ class Main
       when 1
         @game.one_more_dealer
       when 2
+
         @game.one_more_player
-        #@game.three_cards
+        open_cards if @game.three_cards?
 
       when 3
          open_cards

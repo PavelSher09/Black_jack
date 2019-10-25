@@ -43,33 +43,49 @@ class Game
 
     if (gamer_points > dealer_points && gamer_points < 22) || dealer_points > 21
     winner = @gamer
+
     elsif (dealer_points > gamer_points && dealer_points < 22) || gamer_points > 21
     winner = @dealer
+
     elsif
       gamer_points > 21 && dealer_points > 21
-
+      winner = nil
     elsif
       gamer_points == dealer_points
-
+      winner = nil
 
     end
   end
 
+  def three_cards?
+    @gamer.given_cards.size == 3 || @dealer.given_cards.size == 3
+  end
+
   def get_money(gamer_points, dealer_points)
     winner = define_winner(@gamer.points, @dealer.points)
-      if winner = @gamer
-        @gamer.money += @bank
-        p winner
-        p @gamer.money
-      elsif winner = @dealer
-        @dealer.money += @bank
-        p @winner
+
+      if winner
+        winner.money += @bank
+
         p @dealer.money
+        p @gamer.money
+        p "#{winner.name} wins"
       elsif
-        p "TIE"
+        @gamer.money += @bank/2
+        @dealer.money += @bank/2
 
       end
-    end
+  end
 
+  def check_money
+    if @dealer.money <= 0
+      p @dealer.money
+      p "Gamer wins"
+      abort
+      elsif @gamer.money <= 0
+      p "Dealer wins"
+      abort
+    end
+  end
 
 end
