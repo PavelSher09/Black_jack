@@ -7,10 +7,9 @@ require_relative 'main'
 
 class Main
   attr_accessor :name
-  attr_reader :game, :gamer, :cards, :points, :deck
+  attr_reader :game, :gamer, :cards
 
   def create_game
-
     puts 'Input your name: '
     @name = gets.strip
     @game = Game.new(name)
@@ -42,7 +41,7 @@ class Main
         open_cards if @game.three_cards?
 
       when 3
-         open_cards
+        open_cards
 
       else
         puts 'Wrong input. Please, choose 1, 2 or 3.'
@@ -51,12 +50,12 @@ class Main
   end
 
   def show_dealer_cards_secret
-    puts "Dealer cards ** value **"
+    puts 'Dealer cards ** value **'
   end
 
   def show_card(card)
     puts "#{card.rating}#{card.suit} "
-   end
+  end
 
   def show_user_cards(gamer, value = 0)
     puts "#{gamer.name} cards (#{value} points): "
@@ -83,7 +82,6 @@ class Main
     show_cards
     @game.check_money
     play_again
-
   end
 
   def play_again
@@ -91,12 +89,9 @@ class Main
     input = gets.strip
     if input == 'y'
       @game.deal
-    elsif
-      abort
+    elsif abort
     end
   end
-
-
 end
 
 Main.new.run

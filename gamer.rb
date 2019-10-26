@@ -4,8 +4,8 @@ require_relative 'game'
 require_relative 'bank'
 
 class Gamer
-  attr_accessor :name,  :money
-  attr_reader :given_cards, :value, :deck, :cards, :game
+  attr_accessor :name, :money, :value
+  attr_reader :given_cards, :deck, :cards, :game
 
   BET = 10
 
@@ -29,16 +29,11 @@ class Gamer
   end
 
   def points
-    @points = 0
+    @points = @given_cards.sum(&:value)
     @given_cards.each do |card|
-      @points += card.value.to_i
+      @points -= 10 if card.rating == 'A' && @points > 21
     end
-    @points -= 10 if aces? && @points > 21
+
     @points
   end
-
-  def aces?
-    @given_cards.any? { |card| rating = 'A' }
-  end
-
 end

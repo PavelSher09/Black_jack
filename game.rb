@@ -4,7 +4,7 @@ require_relative 'gamer'
 require_relative 'dealer'
 
 class Game
-  attr_reader :deck, :gamer, :name, :given_cards, :cards, :dealer, :money
+  attr_reader :deck, :gamer, :name, :dealer
 
   def initialize(name)
     @gamer = Gamer.new(name)
@@ -13,7 +13,6 @@ class Game
     @bank = Bank.new(name)
 
     deal
-
   end
 
   def deal
@@ -29,8 +28,6 @@ class Game
 
   def one_more_dealer
     @dealer.given_cards << @deck.cards.pop if @dealer.points < 17
-
-
   end
 
   def open_cards
@@ -39,53 +36,55 @@ class Game
     get_money(gamer_points, dealer_points)
   end
 
-  def define_winner(gamer_points,dealer_points)
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
 
+  def define_winner(gamer_points, dealer_points)
     if (gamer_points > dealer_points && gamer_points < 22) || dealer_points > 21
-    winner = @gamer
+      winner = @gamer
 
     elsif (dealer_points > gamer_points && dealer_points < 22) || gamer_points > 21
-    winner = @dealer
+      winner = @dealer
 
-    elsif
-      gamer_points > 21 && dealer_points > 21
+    elsif gamer_points > 21 && dealer_points > 21
       winner = nil
-    elsif
-      gamer_points == dealer_points
+    elsif gamer_points == dealer_points
       winner = nil
 
     end
   end
+
+  # rubocop:enable Metrics/PerceivedComplexity
+  # rubocop:enable Metrics/CyclomaticComplexity
 
   def three_cards?
     @gamer.given_cards.size == 3 || @dealer.given_cards.size == 3
   end
 
-  def get_money(gamer_points, dealer_points)
+  def get_money(_gamer_points, _dealer_points)
     winner = define_winner(@gamer.points, @dealer.points)
 
-      if winner
-        winner.money += @bank
+    if winner
+      winner.money += @bank
 
-        p @dealer.money
-        p @gamer.money
-        p "#{winner.name} wins"
-      elsif
-        @gamer.money += @bank/2
-        @dealer.money += @bank/2
+      p @dealer.money
+      p @gamer.money
+      p "#{winner.name} wins"
+    elsif p 'Tie!'
+      @gamer.money += @bank / 2
+      @dealer.money += @bank / 2
 
-      end
+    end
   end
 
   def check_money
     if @dealer.money <= 0
       p @dealer.money
-      p "Gamer wins"
+      p 'Gamer wins'
       abort
-      elsif @gamer.money <= 0
-      p "Dealer wins"
+    elsif @gamer.money <= 0
+      p 'Dealer wins'
       abort
     end
   end
-
 end
