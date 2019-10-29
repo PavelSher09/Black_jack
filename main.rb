@@ -7,7 +7,7 @@ require_relative 'main'
 
 class Main
   attr_accessor :name
-  attr_reader :game, :gamer, :cards
+  attr_reader :game, :gamer, :cards, :winner
 
   def create_game
     puts 'Input your name: '
@@ -80,16 +80,35 @@ class Main
     @game.open_cards
     show_dealer_cards_final
     show_cards
-    @game.check_money
+    check_money
+    result
     play_again
   end
 
   def play_again
     puts 'Play again? (input: Y/N)'
+
     input = gets.strip
     if input == 'y'
       @game.deal
     elsif abort
+    end
+  end
+
+  def check_money
+    if @game.dealer.money <= 0
+      p 'Gamer wins'
+      abort
+    elsif @game.gamer.money <= 0
+      p 'Dealer wins'
+      abort
+    end
+  end
+
+  def result
+    if @game.winner.nil?
+      p 'TIE!'
+    elsif p "#{@game.winner.name} wins, money = #{@game.winner.money}"
     end
   end
 end

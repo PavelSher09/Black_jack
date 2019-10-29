@@ -4,14 +4,14 @@ require_relative 'gamer'
 require_relative 'dealer'
 
 class Game
-  attr_reader :deck, :gamer, :name, :dealer
+  attr_reader :deck, :gamer, :name, :dealer, :winner
 
   def initialize(name)
     @gamer = Gamer.new(name)
     @deck = Deck.new
     @dealer = Dealer.new
     @bank = Bank.new(name)
-
+    @winner = winner
     deal
   end
 
@@ -41,16 +41,16 @@ class Game
 
   def define_winner(gamer_points, dealer_points)
     if (gamer_points > dealer_points && gamer_points < 22) || dealer_points > 21
-      winner = @gamer
+      @winner = @gamer
 
     elsif (dealer_points > gamer_points && dealer_points < 22) || gamer_points > 21
-      winner = @dealer
+      @winner = @dealer
 
     elsif gamer_points > 21 && dealer_points > 21
-      winner = nil
-    elsif gamer_points == dealer_points
-      winner = nil
+      @winner = nil
 
+    elsif gamer_points == dealer_points
+      @winner = nil
     end
   end
 
@@ -62,29 +62,13 @@ class Game
   end
 
   def get_money(_gamer_points, _dealer_points)
-    winner = define_winner(@gamer.points, @dealer.points)
+    @winner = define_winner(@gamer.points, @dealer.points)
 
     if winner
-      winner.money += @bank
-
-      p @dealer.money
-      p @gamer.money
-      p "#{winner.name} wins"
-    elsif p 'Tie!'
-      @gamer.money += @bank / 2
+      @winner.money += @bank
+    elsif @gamer.money += @bank / 2
       @dealer.money += @bank / 2
 
-    end
-  end
-
-  def check_money
-    if @dealer.money <= 0
-      p @dealer.money
-      p 'Gamer wins'
-      abort
-    elsif @gamer.money <= 0
-      p 'Dealer wins'
-      abort
     end
   end
 end
